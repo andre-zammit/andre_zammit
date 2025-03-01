@@ -1,21 +1,249 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+
+    /* Font family variables */
+    --font-heading: 'Montserrat', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-technical: 'DM Sans', system-ui, sans-serif;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+  
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom font classes */
+.font-heading {
+  font-family: var(--font-heading) !important;
+}
+
+.font-body {
+  font-family: var(--font-body) !important;
+}
+
+.font-technical {
+  font-family: var(--font-technical) !important;
+}
+
+/* For backward compatibility with Tailwind class names */
+.font-montserrat {
+  font-family: 'Montserrat', system-ui, sans-serif !important;
+}
+
+.font-inter {
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+.font-dm-sans {
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+}
+
+/* Improved section transitions */
+.sections-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+  height: 100vh;
+  scroll-behavior: smooth;
+  transition: transform 0.5s ease-out;
+}
+
+.sections-container.transitioning {
+  transform: scale(0.98) translateY(10px);
+  opacity: 0.8;
+}
+
+.section {
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  opacity: 0.3;
+  scroll-snap-align: start;
+}
+
+.section.active {
+  opacity: 1;
+}
+
+/* Section animations */
+.section {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.section.active {
+  opacity: 1;
+}
+
+.active .hero-title, .active .skills-title, .active .projects-title, .active .contact-title {
+  animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.active .hero-subtitle {
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+  animation-fill-mode: both;
+}
+
+.active .hero-text {
+  animation: fadeInUp 0.8s ease-out 0.4s forwards;
+  opacity: 0;
+  animation-fill-mode: both;
+}
+
+.active .skill-card, .active .project-card, .active .contact-card {
+  animation: fadeInStagger 0.5s ease-out forwards;
+  opacity: 0;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes fadeInStagger {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section.up-direction .hero-title,
+.section.up-direction .skills-title,
+.section.up-direction .projects-title,
+.section.up-direction .contact-title {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.section.up-direction .hero-subtitle,
+.section.up-direction .hero-text {
+  animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.active .skill-card:nth-child(1) { animation-delay: 0.1s; }
+.active .skill-card:nth-child(2) { animation-delay: 0.2s; }
+.active .skill-card:nth-child(3) { animation-delay: 0.3s; }
+.active .skill-card:nth-child(4) { animation-delay: 0.4s; }
+
+.active .project-card:nth-child(1) { animation-delay: 0.1s; }
+.active .project-card:nth-child(2) { animation-delay: 0.2s; }
+
+/* Reverse animations for scrolling direction */
+.section.prev-active.down-direction {
+  animation: fadeOutUp 0.5s ease-out forwards;
+}
+
+.section.prev-active.up-direction {
+  animation: fadeOutDown 0.5s ease-out forwards;
 }
