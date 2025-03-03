@@ -588,7 +588,7 @@ const Portfolio = () => {
                 </p>
                 <p className="text-lg">
                   <a 
-                    href="https://www.linkedin.com/in/andre-zammit" 
+                    href="https://www.linkedin.com/in/zammitandre/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className={`font-medium flex items-center justify-center gap-2 ${
